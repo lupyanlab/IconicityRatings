@@ -57,14 +57,11 @@ export function runExperiment(
     key_forward: "space",
     key_backward: "backspace",
     pages: [
-      /*html*/ `<p class="lead">You will be asked to rate the "genderness" of about 100 common English words.<br>
-      Some words have "natural" gender, e.g. "he" and "brother" generally refer to men.<br>
-      Other words have no "natural" gender, but may be associated with a gender.<br>
-      For example, you may think that "flowers" are a relatively feminine word. <br>
-      Please use your intuitions to rate each word you see.  <br>
-      Any words that refer to people's names will be capitalized. The meaning of words with ambiguous meanings will be clarified.<br>
-      Use the keys 1-5 to respond. Please try to use the entire scale, from "Very feminine" to "Very masculine"<br>
-      It's ok to go with your first impression for each word, but keep in mind that inattentive responding may result in a denial of payment.</p> ${continue_space}`
+      /*html*/ `<p class="lead">You will be asked to rate the gender (masculine/feminine) of 100 English words.<br>
+      Most of the words are first names. Some are last names. And a few are regular English words.<br>
+      Please use your intuition to rate each word from very feminine to very masculine using the 1-5 keys.<br>
+      Try to use the entire scale. It's ok to go with your first impression for each word, but please do not rush.<br>
+      <b>Inattentive responding may result in a denial of payment.</b></p> ${continue_space}`
     ]
   };
 
