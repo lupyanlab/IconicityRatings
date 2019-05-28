@@ -14,7 +14,7 @@ let writer = csvWriter({ sendHeaders: false });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.set("port", process.env.PORT || 7100);
+app.set("port", process.env.PORT || 7102);
 
 // Add headers
 app.use(function(req, res, next) {
@@ -56,10 +56,10 @@ function createFolderIfDoesntExist(foldername) {
   }
 }
 
-createFolderIfDoesntExist('demographics');
-createFolderIfDoesntExist('trials');
-createFolderIfDoesntExist('data');
-createFolderIfDoesntExist('word_to_rate');
+createFolderIfDoesntExist("demographics");
+createFolderIfDoesntExist("trials");
+createFolderIfDoesntExist("data");
+createFolderIfDoesntExist("word_to_rate");
 
 if (fs.existsSync(batchesCountDevPath)) {
   // Read existing category counts if csv exists.
