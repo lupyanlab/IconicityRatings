@@ -1,100 +1,54 @@
-word,question_prompt_pre,question_prompt_post,question_type,bin,choice1,choice2,choice3,choice4,choice5
-Alan,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Alexander,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Amelia,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Amos,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Annabelle,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Apgar,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Arnie,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Arthur,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Babar,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Blaze,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Bly,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Camilla,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Carl,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Clara,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Claudette,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Clifford,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Colvin,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Duncan,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Elmo,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Eloise,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Emily,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Ferdinand,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Finch,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Florence,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Frances,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-froggy,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Gilly,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-grandfather,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Griffith,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Grouchy,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Grover,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Gruffalo,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Harold,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Harry,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Helen,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Hippopotomus,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Horton,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Irene,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Jake,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Jenny,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Joyner,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Katy,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Keller,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Laura,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Lemlich,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Lessmore,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Lilly,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-llama,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Lorax,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Loris,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Lucy,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Lulu,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-lupine,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Lydia,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Margaret,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Maria,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Martha,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Max,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Mcgee,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Mike,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Moose,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Morris,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Mulligan,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Nellie,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Nelson,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Nicholas,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Nikolai,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Nutbrown,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Olivia,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Oprah,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Pascal,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Pete,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Phoebe,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Pooh,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Pookie,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Rocket,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Ruby,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Sal,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Sam,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Smith,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Sonia,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Sotomayor,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Stellaluna,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Sylvester,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Tallchief,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Tembo,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Thomas,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Tikki,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Triangle,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Tubman,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Virginia,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Winfrey,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Yertle,Is the word,...,gender,1,Very masculine,Somewhat masculine,Neither masculine nor feminine,Somewhat feminine,Very feminine
-Fish can swim,,,catch,5,Strongly disagree,Somewhat disagree,Neither agreee nor disagree,Somewhat agree,Strongly agree
-Five + 2 is seven,,,catch,5,Strongly disagree,Somewhat disagree,Neither agreee nor disagree,Somewhat agree,Strongly agree
-The word red has two letters,,,catch,1,Strongly disagree,Somewhat disagree,Neither agreee nor disagree,Somewhat agree,Strongly agree
-Squares have four sides,,,catch,5,Strongly disagree,Somewhat disagree,Neither agreee nor disagree,Somewhat agree,Strongly agree
-An elephant is smaller than a mouse,,,catch,1,Strongly disagree,Somewhat disagree,Neither agreee nor disagree,Somewhat agree,Strongly agree
-Six is larger than four,,,catch,5,Strongly disagree,Somewhat disagree,Neither agreee nor disagree,Somewhat agree,Strongly agree
+word	question_prompt_pre	question_prompt_post	question_type	bin	choice1	choice2	choice3	choice4	choice5	choice6	choice7
+annoyance	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+baseline	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+boss	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+cargo	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+closet	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+core	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+deathly	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+disregard	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+emotion	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+fatherhood	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+forgotten	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+grade	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+helpless	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+increase	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+knew	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+lousy	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+migrate	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+neither	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+oversight	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+pinpoint	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+problem	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+rebuild	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+roast	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+seesaw	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+slash	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+sprawl	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+suggest	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+thesaurus	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+trumpet	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+violence	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+word	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+angst	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+blight	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+claustrophobic	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+cuddly	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+discriminating	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+eradicate	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+fundamentalism	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+hic	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+induct	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+kamikaze	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+Messiah	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+ordnance	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+pomp	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+redemptory	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+seditious	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+stapler	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+toupee	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+unreligious	Is the word	...	iconicity	1	(1) Not iconic at all	(2)	(3)	(4)	(5)	(6)	(7) Very iconic
+Please choose the right-most option		catch	catch	1	(1) Strongly disagree	(2)	(3)	(4)	(5)	(6)	(7) Strongly agree
+Please choose the middle option		catch	catch	5	(1) Strongly disagree	(2)	(3)	(4)	(5)	(6)	(7) Strongly agree
+The word red has two letters		catch	catch	1	(1) Strongly disagree	(2)	(3)	(4)	(5)	(6)	(7) Strongly agree
+Squares have four sides		catch	catch	5	(1) Strongly disagree	(2)	(3)	(4)	(5)	(6)	(7) Strongly agree
