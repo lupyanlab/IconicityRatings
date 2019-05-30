@@ -1,5 +1,11 @@
 import demographicsQuestions from "./demographics.js";
 
+function qNQuestionComparator(a, b) {
+  const n1 = Number(a[0].slice(1));
+  const n2 = Number(b[0].slice(1));
+  return n1 - n2;
+}
+
 // Function Call to Run the experiment
 export function runExperiment(
   trials,
@@ -80,112 +86,78 @@ export function runExperiment(
       question_prompt_post: trial.question_prompt_post,
       question_type: trial.question_type,
       bin: trial.bin,
-      choice1: trial.choice1,
-      choice2: trial.choice2,
-      choice3: trial.choice3,
-      choice4: trial.choice4,
-      choice5: trial.choice5,
       expTimer: -1,
       response: -1,
       trial_number: trial_number,
-      rt: -1
+      rt: -1,
+      choice: null,
+      unknown: null
     };
 
-    let stimulus = /*html*/ `
-      <h4 style="text-align:center;margin-top:0;">Trial ${trial_number} of ${num_trials}</h4>
-      <div style="padding:10%;"><h1>${trial.question_prompt_pre} "${trial.word}" ${trial.question_prompt_post}</h1></div>
-  `;
+    const questions = [
+      {
+        key: trial.question_type,
+        prompt: /*html*/ `
+        <h2>
+          ${trial.question_prompt_pre}${trial.word}${trial.question_prompt_post}
+        </h2>`,
+        labels: [
+          trial.choice1,
+          trial.choice2,
+          trial.choice3,
+          trial.choice4,
+          trial.choice5,
+          trial.choice6,
+          trial.choice7
+        ],
+        required: true
+      }
+    ];
 
-    const choices = [trial.choice1, trial.choice2, trial.choice3, trial.choice4, trial.choice5];
-
-    let circles = choices.map(choice => {
-      return /*html*/ `
-          <div class="choice">
-              <div class="choice-circle empty-circle"></div>
-              <div class="text">${choice}</div>
-          </div>
-      `;
-    });
-
-    let prompt = /*html*/ `
-          <div class="bar">
-              ${circles.join("")}
-          </div>
-      `;
-
-    // Picture Trial
-    let pictureTrial = {
-      type: "html-keyboard-response",
-      choices: choices.map((choice, index) => {
-        return `${index + 1}`;
-      }),
-
-      stimulus: stimulus,
-
-      prompt: function() {
-        return prompt;
-      },
+    // TODO: Create custom survey-likert with checkbox for unknown word choice.
+    const questionTrial = {
+      type: "lupyanlab-survey-likert-skip",
+      preamble: /*html*/ `        
+          <h4 style="text-align:center;margin-top:0;width:50vw;margin:auto;">Trial ${trial_number} of ${num_trials}</h4>
+        `,
+      questions,
+      button_label: "Submit",
+      skip_checkbox_label:
+        "I don’t know the meaning or the pronunciation of this word.",
 
       on_finish: function(data) {
-        response.response = String.fromCharCode(data.key_press);
-        response.choice = choices[Number(response.response) - 1];
-        response.rt = data.rt;
-        response.expTimer = data.time_elapsed / 1000;
+        const responses = Object.entries(JSON.parse(data.responses))
+          .sort(qNQuestionComparator)
+          .reduce(
+            (acc, [QN, response], i) => ({
+              ...acc,
+              [questions[i].key]: response + 1 // choices start with 1 instead of 0
+            }),
+            {
+              ...response,
+              rt: data.rt,
+              expTimer: data.time_elapsed / 1000,
+              unknown: data.skipped ? 1 : 0
+            }
+          );
+        console.log(responses);
 
         // POST response data to server
         $.ajax({
           url: "http://" + document.domain + ":" + PORT + "/data",
           type: "POST",
           contentType: "application/json",
-          data: JSON.stringify(response),
+          data: JSON.stringify(responses),
           success: function() {
-            console.log(response);
+            console.log(responses);
           }
         });
-      }
-    };
-    timeline.push(pictureTrial);
-
-    // let subject view their choice
-    let breakTrial = {
-      type: "html-keyboard-response",
-      trial_duration: 500,
-      response_ends_trial: false,
-
-      stimulus: stimulus,
-
-      prompt: function() {
-        const circles = choices.map((choice, index) => {
-          if (choice == response.choice) {
-            return /*html*/ `
-                      <div class="choice">
-                        <div class="choice-circle filled-circle"></div>
-                        <div class="text">${choice}</div>
-                      </div>
-                    `;
-          }
-          return /*html*/ `
-                <div class="choice">
-                  <div class="choice-circle empty-circle"></div>
-                  <div class="text">${choice}</div>
-                </div>
-                `;
-        });
-
-        const prompt = /*html*/ `
-                <div class="bar">
-                    ${circles.join("")}
-                </div>
-            `;
-        return prompt;
-      },
-
-      on_finish: function() {
-        jsPsych.setProgressBar((progress_number - 1) / num_trials);
+        jsPsych.setProgressBar(progress_number / num_trials);
         progress_number++;
       }
     };
-    timeline.push(breakTrial);
+
+    timeline.push(questionTrial);
     trial_number++;
   });
 
