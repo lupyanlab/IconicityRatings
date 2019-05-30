@@ -134,7 +134,7 @@ app.post("/trials", function(req, res) {
     const completedWords = new Set();
     const trials = [];
     if (fs.existsSync(dataPath)) {
-      csv()
+      csv({ delimiter: "\t" })
         .fromFile(dataPath)
         .on("json", jsonObj => {
           completedWords.add(jsonObj.word);
@@ -150,7 +150,7 @@ app.post("/trials", function(req, res) {
             });
         });
     } else {
-      csv()
+      csv({ delimiter: "\t" })
         .fromFile(trialsPath)
         .on("json", jsonObj => {
           trials.push(jsonObj);
