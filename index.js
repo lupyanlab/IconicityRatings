@@ -134,7 +134,7 @@ app.post("/trials", function(req, res) {
     const completedWords = new Set();
     const trials = [];
     if (fs.existsSync(dataPath)) {
-      csv({ delimiter: "\t" })
+      csv()
         .fromFile(dataPath)
         .on("json", jsonObj => {
           completedWords.add(jsonObj.word);
@@ -150,7 +150,7 @@ app.post("/trials", function(req, res) {
             });
         });
     } else {
-      csv({ delimiter: "\t" })
+      csv()
         .fromFile(trialsPath)
         .on("json", jsonObj => {
           trials.push(jsonObj);
@@ -179,7 +179,7 @@ app.post("/trials", function(req, res) {
     // fs.copyFileSync(path.resolve(__dirname, `${batchFile}.csv`), trialsPath);
 
     let trials = [];
-    csv()
+    csv({ delimiter: "\t" })
       .fromFile(path.resolve(__dirname, `${batchFile}.csv`))
       .on("json", jsonObj => {
         trials.push(jsonObj);
