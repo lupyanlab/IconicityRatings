@@ -1,5 +1,6 @@
 import { runExperiment } from "./experiment.js";
 
+const dev = false;
 const PORT = 7102;
 const FULLSCREEN = true;
 $(document).ready(function() {
@@ -26,7 +27,7 @@ $(document).ready(function() {
     url: "http://" + document.domain + ":" + PORT + "/trials",
     type: "POST",
     contentType: "application/json",
-    data: JSON.stringify({ subjCode, reset, dev: false }),
+    data: JSON.stringify({ subjCode, reset, dev }),
     success: function(data) {
       console.log(data);
 
@@ -38,7 +39,8 @@ $(document).ready(function() {
         assignmentId,
         hitId,
         FULLSCREEN,
-        PORT
+        PORT,
+        dev
       );
     }
   });

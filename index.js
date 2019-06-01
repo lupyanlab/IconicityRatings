@@ -131,19 +131,27 @@ app.post("/trials", function(req, res) {
   // Send filtered trials to client
   if (fs.existsSync(trialsPath) && reset == "false") {
     console.log("Grabbing unfinished trials");
-    const completedWords = new Set();
+    const completedWordsPerBatch = {};
     const trials = [];
     if (fs.existsSync(dataPath)) {
       csv()
         .fromFile(dataPath)
         .on("json", jsonObj => {
-          completedWords.add(jsonObj.word);
+          if (!(jsonObj.batchFile in completedWordsPerBatch)) {
+            completedWordsPerBatch[jsonObj.batchFile] = new Set();
+          }
+          completedWordsPerBatch[jsonObj.batchFile].add(jsonObj.word);
         })
         .on("done", error => {
           csv()
             .fromFile(trialsPath)
             .on("json", jsonObj => {
-              !completedWords.has(jsonObj.word) && trials.push(jsonObj);
+              if (
+                !(jsonObj.batchFile in completedWordsPerBatch) ||
+                !completedWordsPerBatch[jsonObj.batchFile].has(jsonObj.word)
+              ) {
+                trials.push(jsonObj);
+              }
             })
             .on("done", error => {
               res.send({ success: true, trials });
@@ -166,12 +174,6 @@ app.post("/trials", function(req, res) {
   else {
     console.log("Creating new trials");
 
-    // removes existing data files if resetting
-    if (reset == "true") {
-      if (fs.existsSync(trialsPath)) fs.unlinkSync(trialsPath);
-      if (fs.existsSync(dataPath)) fs.unlinkSync(dataPath);
-    }
-
     const batchFile = Object.entries(batchesCount[env]).reduce((a, c) =>
       Number(a[1]) < Number(c[1]) ? a : c
     )[0];
@@ -182,7 +184,7 @@ app.post("/trials", function(req, res) {
     csv({ delimiter: "\t" })
       .fromFile(path.resolve(__dirname, `${batchFile}.csv`))
       .on("json", jsonObj => {
-        trials.push(jsonObj);
+        trials.push({ ...jsonObj, batchFile });
       })
       .on("done", error => {
         batchesCount[env][batchFile] = String(

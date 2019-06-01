@@ -14,7 +14,8 @@ export function runExperiment(
   assignmentId,
   hitId,
   FULLSCREEN,
-  PORT
+  PORT,
+  dev
 ) {
   let timeline = [];
 
@@ -53,7 +54,7 @@ export function runExperiment(
     check_fn: check_consent
   };
 
-  timeline.push(consent);
+  // timeline.push(consent);
 
   let continue_space =
     "<div class='right small'>(press SPACE to continue)</div>";
@@ -72,94 +73,98 @@ export function runExperiment(
   };
 
   timeline.push(instructions);
-  const num_trials = trials.length;
 
+  
   let trial_number = 1;
-  let progress_number = 1;
 
-  // Pushes each audio trial to timeline
-  trials.forEach(trial => {
-    let response = {
-      subjCode: subjCode,
-      word: trial.word,
-      question_prompt_pre: trial.question_prompt_pre,
-      question_prompt_post: trial.question_prompt_post,
-      question_type: trial.question_type,
-      bin: trial.bin,
-      expTimer: -1,
-      response: -1,
-      trial_number: trial_number,
-      rt: -1,
-      choice: null,
-      unknown: null
-    };
+  const jSPsychTrials = {
+    timeline: [createJSPsychTrial()],
+    // trial_number starts with 1 and is incremented in the on_finish function
+    loop_function() {
+      trial_number++;
+      const shouldLoop = (trial_number - 1) < trials.length;
+      if (!shouldLoop) {
+        trial_number = 1;
+      }
+      return shouldLoop;
+    } 
+  }
 
-    const questions = [
+  // timeline.push(jSPsychTrials);
+
+
+  // TODO: No more than 2 batches on resume.
+  var pre_if_trial = {
+    type: "html-keyboard-response",
+    stimulus:
+      "The next trial is in a conditional statement. Press S to skip it, or V to view it."
+  };
+  timeline.push(pre_if_trial);
+
+  var if_trial = {
+    type: "html-keyboard-response",
+    stimulus: "You chose to view the trials[trial_number-1]. Press any key to continue."
+  };
+
+  var if_node = {
+    timeline: [
       {
-        key: trial.question_type,
-        prompt: /*html*/ `
-        <h2>
-          ${trial.question_prompt_pre}${trial.word}${trial.question_prompt_post}
-        </h2>`,
-        labels: [
-          trial.choice1,
-          trial.choice2,
-          trial.choice3,
-          trial.choice4,
-          trial.choice5,
-          trial.choice6,
-          trial.choice7
-        ],
-        required: true
-      }
-    ];
+        type: "call-function",
+        async: true,
+        func(done) {
+          // This calls server to run python generate trials (judements.py) script
+          // Then passes the generated trials to the experiment
+          $.ajax({
+            url: "http://" + document.domain + ":" + PORT + "/trials",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ subjCode, reset: true, dev }),
+            success: function(data) {
+              console.log(data);
 
-    // TODO: Create custom survey-likert with checkbox for unknown word choice.
-    const questionTrial = {
-      type: "lupyanlab-survey-likert-skip",
-      preamble: /*html*/ `        
-          <h4 style="text-align:center;margin-top:0;width:50vw;margin:auto;">Trial ${trial_number} of ${num_trials}</h4>
-        `,
-      questions,
-      button_label: "Submit",
-      skip_checkbox_label:
-        "I don’t know the meaning or the pronunciation of this word.",
+              trials = data.trials;
 
-      on_finish: function(data) {
-        const responses = Object.entries(JSON.parse(data.responses))
-          .sort(qNQuestionComparator)
-          .reduce(
-            (acc, [QN, response], i) => ({
-              ...acc,
-              [questions[i].key]: response + 1 // choices start with 1 instead of 0
-            }),
-            {
-              ...response,
-              rt: data.rt,
-              expTimer: data.time_elapsed / 1000,
-              unknown: data.skipped ? 1 : 0
+              done(data);
             }
-          );
-        console.log(responses);
-
-        // POST response data to server
-        $.ajax({
-          url: "http://" + document.domain + ":" + PORT + "/data",
-          type: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(responses),
-          success: function() {
-            console.log(responses);
+          });
+        }
+      },
+      {
+        timeline: [createJSPsychTrial()],
+        // trial_number starts with 1 and is incremented in the on_finish function
+        loop_function() {
+          trial_number++;
+          const shouldLoop = (trial_number - 1) < trials.length;
+          if (!shouldLoop) {
+            trial_number = 1;
           }
-        });
-        jsPsych.setProgressBar(progress_number / num_trials);
-        progress_number++;
+          return shouldLoop;
+        } 
+      },
+    ],
+    conditional_function: function() {
+      // get the data from the previous trial,
+      // and check which key was pressed
+      var data = jsPsych.data
+        .get()
+        .last(1)
+        .values()[0];
+      if (
+        data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode("s")
+      ) {
+        return false;
+      } else {
+        return true;
       }
-    };
+    }
+  };
+  timeline.push(if_node);
 
-    timeline.push(questionTrial);
-    trial_number++;
-  });
+  var after_if_trial = {
+    type: "html-keyboard-response",
+    stimulus: "This is the trial after the conditional."
+  };
+  timeline.push(after_if_trial);
 
   let questionsInstructions = {
     type: "instructions",
@@ -212,4 +217,70 @@ export function runExperiment(
       auto_update_progress_bar: false
     });
   }
+
+  
+function createJSPsychTrial() {
+    return {
+      type: "lupyanlab-survey-likert-skip",
+      preamble: () => /*html*/ `
+          <h4 style="text-align:center;margin-top:0;width:50vw;margin:auto;">Trial ${trial_number} of ${trials.length}</h4>
+        `,
+      questions: () => [
+      {
+        key: trials[trial_number-1].question_type,
+        prompt: /*html*/ `
+        <h2>
+          ${trials[trial_number-1].question_prompt_pre}${trials[trial_number-1].word}${trials[trial_number-1].question_prompt_post}
+        </h2>`,
+        labels: [
+          trials[trial_number-1].choice1,
+          trials[trial_number-1].choice2,
+          trials[trial_number-1].choice3,
+          trials[trial_number-1].choice4,
+          trials[trial_number-1].choice5,
+          trials[trial_number-1].choice6,
+          trials[trial_number-1].choice7
+        ],
+        required: true
+      }
+    ],
+    button_label: "Submit",
+    skip_checkbox_label:
+      "I don’t know the meaning or the pronunciation of this word.",
+
+    on_finish: function(data) {
+      const response =
+          {
+            subjCode: subjCode,
+            word: trials[trial_number-1].word,
+            question_prompt_pre: trials[trial_number-1].question_prompt_pre,
+            question_prompt_post: trials[trial_number-1].question_prompt_post,
+            question_type: trials[trial_number-1].question_type,
+            bin: trials[trial_number-1].bin,
+            expTimer: -1,
+            response: -1,
+            trial_number: trial_number,
+            unknown: null,
+            rt: data.rt,
+            expTimer: data.time_elapsed / 1000,
+            unknown: data.skipped ? 1 : 0,
+            file: trials[trial_number-1].batchFile,
+            choice: JSON.parse(data.responses).Q0 + 1,
+          }
+      console.log(response);
+
+      // POST response data to server
+      $.ajax({
+        url: "http://" + document.domain + ":" + PORT + "/data",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(response),
+        success: function() {
+          console.log(response);
+        }
+      });
+      jsPsych.setProgressBar(trial_number / trials.length);
+    }
+  };
+}
 }

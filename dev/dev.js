@@ -2,6 +2,8 @@ import { runExperiment } from "./experiment.js";
 
 const PORT = 7102;
 const FULLSCREEN = false;
+const dev = true;
+
 $(document).ready(function() {
   // This listens to the form on-submit action
   $("form").submit(function() {
@@ -40,7 +42,8 @@ $(document).ready(function() {
           assignmentId,
           hitId,
           FULLSCREEN,
-          PORT
+          PORT,
+          dev
         );
       }
     });
