@@ -56,7 +56,7 @@ export function runExperiment(
 
   // timeline.push(consent);
 
-  let continue_space =
+  const continue_space =
     "<div class='right small'>(press SPACE to continue)</div>";
 
   let instructions = {
@@ -94,19 +94,16 @@ export function runExperiment(
 
 
   // TODO: No more than 2 batches on resume.
-  var pre_if_trial = {
-    type: "html-keyboard-response",
+  const askSecondBatchTrial = {
+    type: "html-button-response",
     stimulus:
-      "The next trial is in a conditional statement. Press S to skip it, or V to view it."
-  };
-  timeline.push(pre_if_trial);
+      "Do you want to do another list?",
+    choices: ['Yes. Give me another list.', 'No thanks.'], 
 
-  var if_trial = {
-    type: "html-keyboard-response",
-    stimulus: "You chose to view the trials[trial_number-1]. Press any key to continue."
   };
+  timeline.push(askSecondBatchTrial);
 
-  var if_node = {
+  const secondBatchTrial = {
     timeline: [
       {
         type: "call-function",
@@ -145,26 +142,14 @@ export function runExperiment(
     conditional_function: function() {
       // get the data from the previous trial,
       // and check which key was pressed
-      var data = jsPsych.data
+      const data = jsPsych.data
         .get()
         .last(1)
         .values()[0];
-      if (
-        data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode("s")
-      ) {
-        return false;
-      } else {
-        return true;
+      return data.button_pressed == 0;
       }
     }
-  };
-  timeline.push(if_node);
-
-  var after_if_trial = {
-    type: "html-keyboard-response",
-    stimulus: "This is the trial after the conditional."
-  };
-  timeline.push(after_if_trial);
+  timeline.push(secondBatchTrial);
 
   let questionsInstructions = {
     type: "instructions",
@@ -284,3 +269,4 @@ function createJSPsychTrial() {
   };
 }
 }
+
