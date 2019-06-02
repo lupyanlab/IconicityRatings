@@ -235,8 +235,8 @@ function createJSPsychTrial() {
         required: true
       }
     ],
-    button_label: "Submit",
-    skip_checkbox_label:
+    button_label: "Skip",
+    skip_label:
       "I don’t know the meaning or the pronunciation of this word.",
 
     on_finish: function(data) {

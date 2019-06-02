@@ -43,12 +43,12 @@ jsPsych.plugins["lupyanlab-survey-likert-skip"] = (function() {
         default: "Continue",
         description: "Label of the button."
       },
-      skip_checkbox_label: {
+      skip_label: {
         type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: "Skip Checkbox label",
+        pretty_name: "Skip label",
         default: "Skip",
-        description: "Label of the skip checkbox."
-      }
+        description: "Label to show above the skip button."
+      },
     }
   };
 
@@ -112,9 +112,10 @@ jsPsych.plugins["lupyanlab-survey-likert-skip"] = (function() {
 
     // add submit button
     html +=
-      '<input id="skip" class="jspsych-survey-likert jspsych-btn" style="width:auto" value="' +
-      trial.skip_checkbox_label +
-      '"></input>';
+      /*html*/`
+      <label class="jspsych-survey-likert-opt-label">${trial.skip_label}</label>
+      <br>
+      <input id="skip" class="jspsych-survey-likert jspsych-btn" style="width:auto" value=${trial.button_label}></input>`;
 
     html += "</form>";
 
