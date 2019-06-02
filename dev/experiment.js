@@ -15,7 +15,8 @@ export function runExperiment(
   hitId,
   FULLSCREEN,
   PORT,
-  dev
+  dev,
+  maxBatchNum,
 ) {
   let timeline = [];
 
@@ -78,7 +79,7 @@ export function runExperiment(
   let trial_number = 1;
 
   const jSPsychTrials = {
-    timeline: [createJSPsychTrial()],
+    timeline: trials.length === 0 ? [] : [createJSPsychTrial()],
     // trial_number starts with 1 and is incremented in the on_finish function
     loop_function() {
       trial_number++;
@@ -90,18 +91,19 @@ export function runExperiment(
     } 
   }
 
-  // timeline.push(jSPsychTrials);
+  timeline.push(jSPsychTrials);
 
 
-  // TODO: No more than 2 batches on resume.
   const askSecondBatchTrial = {
     type: "html-button-response",
     stimulus:
       "Do you want to do another list?",
     choices: ['Yes. Give me another list.', 'No thanks.'], 
-
   };
-  timeline.push(askSecondBatchTrial);
+
+  if (maxBatchNum < 2) {
+    timeline.push(askSecondBatchTrial);
+  }
 
   const secondBatchTrial = {
     timeline: [
@@ -109,6 +111,7 @@ export function runExperiment(
         type: "call-function",
         async: true,
         func(done) {
+          maxBatchNum++;
           // This calls server to run python generate trials (judements.py) script
           // Then passes the generated trials to the experiment
           $.ajax({
@@ -140,6 +143,9 @@ export function runExperiment(
       },
     ],
     conditional_function: function() {
+      if (maxBatchNum >= 2) {
+        return false;
+      }
       // get the data from the previous trial,
       // and check which key was pressed
       const data = jsPsych.data
@@ -251,8 +257,9 @@ function createJSPsychTrial() {
             unknown: data.skipped ? 1 : 0,
             file: trials[trial_number-1].batchFile,
             choice: JSON.parse(data.responses).Q0 + 1,
+            batchNum: maxBatchNum,
+            batchFile: trials[trial_number-1].batchFile,
           }
-      console.log(response);
 
       // POST response data to server
       $.ajax({

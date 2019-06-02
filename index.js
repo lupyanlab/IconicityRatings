@@ -134,12 +134,14 @@ app.post("/trials", function(req, res) {
     const completedWordsPerBatch = {};
     const trials = [];
     if (fs.existsSync(dataPath)) {
+      let maxBatchNum = 1;
       csv()
         .fromFile(dataPath)
         .on("json", jsonObj => {
           if (!(jsonObj.batchFile in completedWordsPerBatch)) {
             completedWordsPerBatch[jsonObj.batchFile] = new Set();
           }
+          maxBatchNum = Math.max(jsonObj.batchNum, maxBatchNum);
           completedWordsPerBatch[jsonObj.batchFile].add(jsonObj.word);
         })
         .on("done", error => {
@@ -154,7 +156,7 @@ app.post("/trials", function(req, res) {
               }
             })
             .on("done", error => {
-              res.send({ success: true, trials });
+              res.send({ success: true, trials, maxBatchNum });
             });
         });
     } else {
@@ -164,7 +166,7 @@ app.post("/trials", function(req, res) {
           trials.push(jsonObj);
         })
         .on("done", error => {
-          res.send({ success: true, trials });
+          res.send({ success: true, trials, maxBatchNum: 1 });
         });
     }
   }
@@ -203,13 +205,18 @@ app.post("/trials", function(req, res) {
 
         trials = _.shuffle(trials);
 
-        writer = csvWriter({ headers: Object.keys(trials[0]) });
+        if (!fs.existsSync(trialsPath)) {
+          writer = csvWriter({ headers: Object.keys(trials[0]) });
+        } else {
+          writer = csvWriter({ sendHeaders: false });
+        }
+
         writer.pipe(fs.createWriteStream(trialsPath, { flags: "a" }));
         trials.forEach(trial => writer.write(trial));
         writer.end();
 
         console.log(trials);
-        res.send({ success: true, trials });
+        res.send({ success: true, trials, maxBatchNum: 1 });
       });
   }
 });

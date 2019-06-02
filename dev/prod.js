@@ -40,7 +40,8 @@ $(document).ready(function() {
         hitId,
         FULLSCREEN,
         PORT,
-        dev
+        dev,
+        data.maxBatchNum,
       );
     }
   });

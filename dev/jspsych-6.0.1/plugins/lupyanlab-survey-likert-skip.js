@@ -106,22 +106,14 @@ jsPsych.plugins["lupyanlab-survey-likert-skip"] = (function() {
           "</label></li>";
       }
 
-      // add skip checkbox
-      options_string +=
-        '<li style="width:100%;margin-top:2em;"><input id="skip" type="checkbox"';
-      options_string +=
-        '><label class="jspsych-survey-likert-opt-label" for="skip">' +
-        trial.skip_checkbox_label +
-        "</label></li>";
-
       options_string += "</ul>";
       html += options_string;
     }
 
     // add submit button
     html +=
-      '<input type="submit" id="jspsych-survey-likert-next" class="jspsych-survey-likert jspsych-btn" value="' +
-      trial.button_label +
+      '<input id="skip" class="jspsych-survey-likert jspsych-btn" style="width:auto" value="' +
+      trial.skip_checkbox_label +
       '"></input>';
 
     html += "</form>";
@@ -129,12 +121,26 @@ jsPsych.plugins["lupyanlab-survey-likert-skip"] = (function() {
     display_element.innerHTML = html;
     display_element
       .querySelector("#skip")
-      .addEventListener("change", function() {
+      .addEventListener("click", function() {
         display_element.querySelectorAll('[type="radio"]').forEach(choiceEl => {
-          choiceEl.disabled = this.checked;
+          choiceEl.disabled = true;
         });
-        skipped = this.checked;
+        this.disabled = true;
+        skipped = true;
+        setTimeout(() => display_element.querySelector("#jspsych-survey-likert-form").dispatchEvent(new Event('submit')), 1000);
       });
+
+    display_element.querySelector('.jspsych-survey-likert-opts').focus();
+    display_element
+      .querySelectorAll('[type="radio"]').forEach(choiceEl => {
+          choiceEl.addEventListener('click', () => {
+            display_element.querySelectorAll('[type="radio"]').forEach(choiceEl => {
+              choiceEl.disabled = true;
+            });
+            display_element.querySelector('#skip').disabled = true;
+            setTimeout(() => display_element.querySelector("#jspsych-survey-likert-form").dispatchEvent(new Event('submit')), 1000);
+          })
+        });
 
     display_element
       .querySelector("#jspsych-survey-likert-form")
@@ -178,6 +184,30 @@ jsPsych.plugins["lupyanlab-survey-likert-skip"] = (function() {
         // next trial
         jsPsych.finishTrial(trial_data);
       });
+
+      
+
+    // function to handle responses by the subject
+    var after_response = function(info) {
+      // Ignore response if skipped checkbox is checked
+      if (skipped) {
+        return;
+      }
+
+      
+      display_element.querySelectorAll('input[name=Q0]')[jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(info.key) - 1].click();
+    };
+
+    // start the response listener
+    if (trial.choices != jsPsych.NO_KEYS) {
+      var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
+        callback_function: after_response,
+        valid_responses: Array.from({length: trial.questions[0].labels.length}, (v, k) => String(k+1)),
+        rt_method: 'date',
+        persist: false,
+        allow_held_key: false
+      });
+    }
 
     var startTime = new Date().getTime();
   };
