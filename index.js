@@ -63,7 +63,7 @@ createFolderIfDoesntExist("word_to_rate");
 
 if (fs.existsSync(batchesCountDevPath)) {
   // Read existing category counts if csv exists.
-  csv()
+  csv({ trim: false })
     .fromFile(batchesCountDevPath)
     .on("json", jsonObj => {
       batchesCount.dev = jsonObj;
@@ -87,7 +87,7 @@ if (fs.existsSync(batchesCountDevPath)) {
 
 if (fs.existsSync(batchesCountProdPath)) {
   // Read existing category counts if csv exists.
-  csv()
+  csv({ trim: false })
     .fromFile(batchesCountProdPath)
     .on("json", jsonObj => {
       batchesCount.prod = jsonObj;
@@ -135,7 +135,7 @@ app.post("/trials", function(req, res) {
     const trials = [];
     if (fs.existsSync(dataPath)) {
       let maxBatchNum = 1;
-      csv()
+      csv({ trim: false })
         .fromFile(dataPath)
         .on("json", jsonObj => {
           if (!(jsonObj.batchFile in completedWordsPerBatch)) {
@@ -145,7 +145,7 @@ app.post("/trials", function(req, res) {
           completedWordsPerBatch[jsonObj.batchFile].add(jsonObj.word);
         })
         .on("done", error => {
-          csv()
+          csv({ trim: false })
             .fromFile(trialsPath)
             .on("json", jsonObj => {
               if (
@@ -160,7 +160,7 @@ app.post("/trials", function(req, res) {
             });
         });
     } else {
-      csv()
+      csv({ trim: false })
         .fromFile(trialsPath)
         .on("json", jsonObj => {
           trials.push(jsonObj);
@@ -183,7 +183,7 @@ app.post("/trials", function(req, res) {
     // fs.copyFileSync(path.resolve(__dirname, `${batchFile}.csv`), trialsPath);
 
     let trials = [];
-    csv({ delimiter: "\t" })
+    csv({ delimiter: "\t", trim: false })
       .fromFile(path.resolve(__dirname, `${batchFile}.csv`))
       .on("json", jsonObj => {
         trials.push({ ...jsonObj, batchFile });
