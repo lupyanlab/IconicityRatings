@@ -1,6 +1,6 @@
 import { runExperiment } from "./experiment.js";
+import PORT from "./port.js";
 
-const PORT = 7109;
 const FULLSCREEN = false;
 const dev = true;
 
