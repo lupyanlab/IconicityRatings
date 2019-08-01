@@ -13,7 +13,7 @@ pm2 start index.js --name IconicityRatings
 
 ## Development
 
-If you are working on your local machinese, go to http://localhost:7102.
+If you are working on your local machine, open the dynamic link in the output when running the server.
 
 If you are working on Sapir, go to http://sapir.psych.wisc.edu/mturk/IconicityRatings/dev.
 
