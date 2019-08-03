@@ -23,6 +23,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
     path.join("dev", "port.js"),
     `export default ${PORT};\n`
   );
+  createFolderIfDoesntExist("prod");
+  await fsPromises.writeFile(
+    path.join("prod", "port.js"),
+    `export default ${PORT};\n`
+  );
 
   app.listen(app.get("port"), function() {
     console.log("Node app is running at http://localhost:" + app.get("port"));
@@ -127,6 +132,8 @@ app.post("/trials", function(req, res) {
   let reset = req.body.reset;
   const dev = req.body.dev == true;
   const env = dev ? "dev" : "prod";
+  let trialsNumber = 0;
+
   console.log(`Trials Environment: ${env}`);
   console.log(req.body);
 
