@@ -55,21 +55,32 @@ export function runExperiment(
     check_fn: check_consent
   };
 
-  // timeline.push(consent);
+  timeline.push(consent);
 
   const continue_space =
-    "<div class='right small'>(press SPACE to continue)</div>";
+    "<p><div class='right small'>(press SPACE to continue)</div></p>";
 
   let instructions = {
     type: "instructions",
     key_forward: "space",
     key_backward: "backspace",
     pages: [
-      /*html*/ `<p class="lead">You will be asked to rate the gender (masculine/feminine) of 100 English words.<br>
-      Most of the words are first names. Some are last names. And a few are regular English words.<br>
-      Please use your intuition to rate each word from very feminine to very masculine using the 1-5 keys.<br>
-      Try to use the entire scale. It's ok to go with your first impression for each word, but please do not rush.<br>
-      <b>Inattentive responding may result in a denial of payment.</b></p> ${continue_space}`
+      `<p class="lead">For this HIT you will be asked to rate about 60 English words.</b></p> 
+      Some English words sound are <b>iconic</b>. Their form resembles their meaning. For example, SLURP sounds like the noise made when you perform this kind of drinking action. TEENY <em>seems</em> like something very small (compared to HUGE which seems like something big). You might be able to guess the meaning of such words <em>even if</em> you did not speak English.      
+      ${continue_space}`,
+
+      `<p class="lead"></b></p> 
+      In this task, you are going to rate words for how much words resemble their meanings on a scale from 1 to 7. A rating of 1 indicates that the form of the word does not at all resemble its meaning. 7 indicates that the form of the word very much resembles its meaning. You can use the number keys on your keyboard, or the mouse to respond.
+      ${continue_space}`,
+
+      `<p class="lead"></b></p> 
+      Some words that people have been rated high in iconicity are CLICK, SCREECH, and STOMP. Some words that people have rated moderate in iconicity are PORCUPINE, GLOWING, and STEEP. Some words rated low in iconicity are MENU, AMATEUR, and ARE.     
+      ${continue_space}`,
+
+      `<p class="lead"></b></p> 
+      It is important that you say the word to yourself and think about its meaning. If you do not know a specific word or do not know how to pronounce it, you have the option of skipping it.
+      ${continue_space}`,
+
     ]
   };
 
@@ -188,7 +199,7 @@ export function runExperiment(
 
       let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
         MTurk to get paid. 
-        <p>The purpose of this HIT is to obtain gender ratings for various words to better understand how gender information is represented in children's books.
+        <p>The purpose of this HIT is to rank English words on iconicity to better understand the structure of language.
         
         <p>
         If you have any questions or comments, please email lupyan@wisc.edu.`;
@@ -197,8 +208,23 @@ export function runExperiment(
   };
   timeline.push(demographicsTrial);
 
+  // Empty the timeline if there are no trials.
+  if (trials.length == 0 && maxBatchNum > 2) {
+    timeline = [{
+      type: "instructions",
+      key_forward: "space",
+      key_backward: "backspace",
+      pages: [
+        /*html*/ `<p class="lead">
+        You've finished 2 word lists already and cannot complete more.<br>
+        </p>`
+      ]
+    }];
+  }
+
   startExperiment();
   document.timeline = timeline;
+  
   function startExperiment() {
     jsPsych.init({
       default_iti: 0,
@@ -221,7 +247,7 @@ function createJSPsychTrial() {
         key: trials[trial_number-1].question_type,
         prompt: /*html*/ `
         <h2>
-          ${trials[trial_number-1].question_prompt_pre}${trials[trial_number-1].word}${trials[trial_number-1].question_prompt_post}
+          ${trials[trial_number-1].question_prompt_pre}<br>${trials[trial_number-1].word}${trials[trial_number-1].question_prompt_post}
         </h2>`,
         labels: [
           trials[trial_number-1].choice1,
