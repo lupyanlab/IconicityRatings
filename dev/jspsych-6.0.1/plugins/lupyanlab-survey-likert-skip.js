@@ -128,8 +128,7 @@ jsPsych.plugins["lupyanlab-survey-likert-skip"] = (function() {
         });
         this.disabled = true;
         skipped = true;
-          // TODO: Revert to 1000
-          setTimeout(() => display_element.querySelector("#jspsych-survey-likert-form").dispatchEvent(new Event('submit')), 0);
+          setTimeout(() => display_element.querySelector("#jspsych-survey-likert-form").dispatchEvent(new Event('submit')), 1000);
       });
 
     display_element.querySelector('.jspsych-survey-likert-opts').focus();
@@ -140,8 +139,7 @@ jsPsych.plugins["lupyanlab-survey-likert-skip"] = (function() {
               choiceEl.disabled = true;
             });
             display_element.querySelector('#skip').disabled = true;
-            // TODO: Revert to 1000
-            setTimeout(() => display_element.querySelector("#jspsych-survey-likert-form").dispatchEvent(new Event('submit')), 0);
+            setTimeout(() => display_element.querySelector("#jspsych-survey-likert-form").dispatchEvent(new Event('submit')), 1000);
           })
         });
 
