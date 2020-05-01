@@ -50,7 +50,7 @@ export function runExperiment(
   // declare the block.
   var consent = {
     type: "external-html",
-    url: "./consent.html",
+    url: "./consent_pool.html",
     cont_btn: "start",
     check_fn: check_consent
   };
@@ -64,21 +64,42 @@ export function runExperiment(
     type: "instructions",
     key_forward: "space",
     key_backward: "backspace",
+    
+
+
+
     pages: [
-      `<p class="lead">For this HIT you will be asked to rate about 60 English words.</b></p> 
-      Some English words sound are <b>iconic</b>. Their form resembles their meaning. For example, SLURP sounds like the noise made when you perform this kind of drinking action. TEENY <em>seems</em> like something very small (compared to HUGE which seems like something big). You might be able to guess the meaning of such words <em>even if</em> you did not speak English.      
+      `<p class="lead"><b>Thank you for participating in this experiment!</b><br>
+      In this task you will be rating some English words on their "iconicity". Please read the following instructions very carefully as they are important for doing this task.
       ${continue_space}`,
 
-      `<p class="lead"></b></p> 
-      In this task, you are going to rate words for how much words resemble their meanings on a scale from 1 to 7. A rating of 1 indicates that the form of the word does not at all resemble its meaning. 7 indicates that the form of the word very much resembles its meaning. You can use the number keys on your keyboard, or the mouse to respond.
+      `<p class="text-left">Some English words sound like what they mean. These words are <b>iconic</b>. You might be able to guess the meaning of such a word even if you did not know English.<br><br>
+      Some words that people have rated <b>high</b> in iconicity are “click,” “screech,” and “stomp,” because they sound very much like what they mean.<br><br>
+      Some words that people have rated <b>moderate</b> in iconicity are “porcupine,” “glowing,” and “steep,” because they sound somewhat like what they mean.<br><br>
+      Some words rated <b>low</b> in iconicity are “menu,” “amateur,” and “are,” because they do not sound at all like what they mean.<br><br>
+
+      <b>In this task, you are going to rate words for how iconic they are. You will rate each word on a scale from 1 to 7. A rating of 1 indicates that the word is not at all iconic and does not at all sound like what it means. 7 indicates that the word is high in iconicity and sounds very much like what it means.</b>
       ${continue_space}`,
 
-      `<p class="lead"></b></p> 
-      Some words that people have been rated high in iconicity are CLICK, SCREECH, and STOMP. Some words that people have rated moderate in iconicity are PORCUPINE, GLOWING, and STEEP. Some words rated low in iconicity are MENU, AMATEUR, and ARE.     
+
+      `<p class="text-left"></b>
+      It is important that you say the word out loud to yourself, and that you think about its meaning.<br><br>
+
+      If you do not know the meaning of a specific word or do not know how to pronounce it, you have the option of skipping it.
       ${continue_space}`,
 
-      `<p class="lead"></b></p> 
-      It is important that you say the word to yourself and think about its meaning. If you do not know a specific word or do not know how to pronounce it, you have the option of skipping it.
+      `<p class="text-left"></b>
+      Try to focus on the word meaning of the whole word, rather than decomposing it into parts. 
+      For example, when rating ‘butterfly’ think of the insect rather than "butter" and "fly", and rate how well the whole meaning relates to the sound of the whole word "butterfly".`,
+
+      `<p class="text-left">When you are done with this list of words, you will get one more list of words, for about 100 total.</p>
+      ${continue_space}`,
+
+      // `<p class="text-left">When you are done with this list of words, you will have the option to complete additional lists, e.g., if you complete two lists you will get double the payment.</p>
+      // ${continue_space}`,
+
+      `<p class="lead">Please remember to say the word to yourself and to think about the meaning of each word.<br><br>
+      Ready to start?</p>
       ${continue_space}`,
 
     ]
@@ -109,7 +130,7 @@ export function runExperiment(
     type: "html-button-response",
     stimulus:
       "Do you want to do another list?",
-    choices: ['Yes. Give me another list.', 'No thanks.'], 
+    choices: ['Yes. (choose this if you are a UW student).', 'No thanks.'], 
   };
 
   if (maxBatchNum < 2) {
@@ -123,8 +144,6 @@ export function runExperiment(
         async: true,
         func(done) {
           maxBatchNum++;
-          // This calls server to run python generate trials (judements.py) script
-          // Then passes the generated trials to the experiment
           $.ajax({
             url: "http://" + document.domain + ":" + PORT + "/trials",
             type: "POST",
@@ -197,13 +216,18 @@ export function runExperiment(
         success: function() {}
       });
 
+      let endmessage_pool = `Thank you for participating! Your completion code is ${participantID}. Please retain this code in case there is an issue with credit assignment.
+        <p>The purpose of this task is to rank English words on iconicity to better understand the structure of language.        
+        <p>
+        If you have any questions or comments, please email lupyan@wisc.edu.`;
+
       let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
         MTurk to get paid. 
         <p>The purpose of this HIT is to rank English words on iconicity to better understand the structure of language.
         
         <p>
         If you have any questions or comments, please email lupyan@wisc.edu.`;
-      jsPsych.endExperiment(endmessage);
+      jsPsych.endExperiment(endmessage_pool);
     }
   };
   timeline.push(demographicsTrial);
@@ -246,9 +270,11 @@ function createJSPsychTrial() {
       {
         key: trials[trial_number-1].question_type,
         prompt: /*html*/ `
-        <h2>
-          ${trials[trial_number-1].question_prompt_pre}<br>${trials[trial_number-1].word}${trials[trial_number-1].question_prompt_post}
-        </h2>`,
+        <h3>${trials[trial_number-1].question_prompt_pre}</h3>
+        <h1><b>
+          ${trials[trial_number-1].word}${trials[trial_number-1].question_prompt_post}
+          </b>
+        </h1>`,
         labels: [
           trials[trial_number-1].choice1,
           trials[trial_number-1].choice2,

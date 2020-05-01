@@ -29,13 +29,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
     `export default ${PORT};\n`
   );
 
-  app.listen(app.get("port"), function() {
+  app.listen(app.get("port"), function () {
     console.log("Node app is running at http://localhost:" + app.get("port"));
   });
 })();
 
 // Add headers
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -53,7 +53,7 @@ app.use(function(req, res, next) {
 });
 
 // For Rendering HTML
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname + "/dev/index.html"));
 });
 app.use(express.static(__dirname + "/dev"));
@@ -79,17 +79,17 @@ if (fs.existsSync(batchesCountDevPath)) {
   // Read existing category counts if csv exists.
   csv({ trim: false })
     .fromFile(batchesCountDevPath)
-    .on("json", jsonObj => {
+    .on("json", (jsonObj) => {
       batchesCount.dev = jsonObj;
     })
-    .on("done", error => {
+    .on("done", (error) => {
       if (error) throw error;
       console.log(batchesCount.dev);
     });
 } else {
   // Create new csv of category counts if doesn't exist.
   // Get all categories from image folders.
-  fs.readdirSync(path.join("word_to_rate")).forEach(file => {
+  fs.readdirSync(path.join("word_to_rate")).forEach((file) => {
     // Check for image folders that are non-empty
     batchesCount.dev[path.join("word_to_rate", file.split(".")[0])] = 0;
   });
@@ -103,17 +103,17 @@ if (fs.existsSync(batchesCountProdPath)) {
   // Read existing category counts if csv exists.
   csv({ trim: false })
     .fromFile(batchesCountProdPath)
-    .on("json", jsonObj => {
+    .on("json", (jsonObj) => {
       batchesCount.prod = jsonObj;
     })
-    .on("done", error => {
+    .on("done", (error) => {
       if (error) throw error;
       console.log(batchesCount.prod);
     });
 } else {
   // Create new csv of category counts if doesn't exist.
   // Get all categories from image folders.
-  fs.readdirSync(path.join("word_to_rate")).forEach(file => {
+  fs.readdirSync(path.join("word_to_rate")).forEach((file) => {
     batchesCount.prod[path.join("word_to_rate", file.split(".")[0])] = 0;
   });
   writer = csvWriter({ headers: Object.keys(batchesCount.prod) });
@@ -123,7 +123,7 @@ if (fs.existsSync(batchesCountProdPath)) {
 }
 
 // POST endpoint for requesting trials
-app.post("/trials", function(req, res) {
+app.post("/trials", function (req, res) {
   console.log("trials post request received");
 
   let subjCode = req.body.subjCode;
@@ -153,17 +153,17 @@ app.post("/trials", function(req, res) {
       let maxBatchNum = 1;
       csv({ trim: false })
         .fromFile(dataPath)
-        .on("json", jsonObj => {
+        .on("json", (jsonObj) => {
           if (!(jsonObj.batchFile in completedWordsPerBatch)) {
             completedWordsPerBatch[jsonObj.batchFile] = new Set();
           }
           maxBatchNum = Math.max(jsonObj.batchNum, maxBatchNum);
           completedWordsPerBatch[jsonObj.batchFile].add(jsonObj.word);
         })
-        .on("done", error => {
+        .on("done", (error) => {
           csv({ trim: false })
             .fromFile(trialsPath)
-            .on("json", jsonObj => {
+            .on("json", (jsonObj) => {
               if (
                 !(jsonObj.batchFile in completedWordsPerBatch) ||
                 !completedWordsPerBatch[jsonObj.batchFile].has(jsonObj.word)
@@ -171,17 +171,17 @@ app.post("/trials", function(req, res) {
                 trials.push(jsonObj);
               }
             })
-            .on("done", error => {
+            .on("done", (error) => {
               res.send({ success: true, trials, maxBatchNum });
             });
         });
     } else {
       csv({ trim: false })
         .fromFile(trialsPath)
-        .on("json", jsonObj => {
+        .on("json", (jsonObj) => {
           trials.push(jsonObj);
         })
-        .on("done", error => {
+        .on("done", (error) => {
           res.send({ success: true, trials, maxBatchNum: 1 });
         });
     }
@@ -201,10 +201,10 @@ app.post("/trials", function(req, res) {
     let trials = [];
     csv({ delimiter: "\t", trim: false })
       .fromFile(path.resolve(__dirname, `${batchFile}.csv`))
-      .on("json", jsonObj => {
+      .on("json", (jsonObj) => {
         trials.push({ ...jsonObj, batchFile });
       })
-      .on("done", error => {
+      .on("done", (error) => {
         batchesCount[env][batchFile] = String(
           Number(batchesCount[env][batchFile]) + 1
         );
@@ -219,7 +219,14 @@ app.post("/trials", function(req, res) {
         writer.write(batchesCount[env]);
         writer.end();
 
-        trials = _.shuffle(trials);
+        let noCatchFirstTrials = false;
+
+        while (!noCatchFirstTrials) {
+          trials = _.shuffle(trials);
+          noCatchFirstTrials = trials
+            .slice(0, 15)
+            .every((trial) => trial.question_type !== "catch");
+        }
 
         if (!fs.existsSync(trialsPath)) {
           writer = csvWriter({ headers: Object.keys(trials[0]) });
@@ -228,7 +235,7 @@ app.post("/trials", function(req, res) {
         }
 
         writer.pipe(fs.createWriteStream(trialsPath, { flags: "a" }));
-        trials.forEach(trial => writer.write(trial));
+        trials.forEach((trial) => writer.write(trial));
         writer.end();
 
         console.log(trials);
@@ -238,7 +245,7 @@ app.post("/trials", function(req, res) {
 });
 
 // POST endpoint for receiving trial responses
-app.post("/data", function(req, res) {
+app.post("/data", function (req, res) {
   console.log("data post request received");
 
   // Parses the trial response data to csv
@@ -257,7 +264,7 @@ app.post("/data", function(req, res) {
 });
 
 // POST endpoint for receiving trial responses
-app.post("/demographics", function(req, res) {
+app.post("/demographics", function (req, res) {
   console.log("demographics post request received");
 
   // Parses the trial response data to csv
